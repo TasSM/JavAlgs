@@ -3,32 +3,25 @@ package test;
 import static org.testng.Assert.*;
 
 import main.MultiplyStrings;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 public class MultiplyStringsTest {
 
-  @Test
-  public void test1() {
-    String s = MultiplyStrings.multiply("11", "11");
-    assertEquals(s, "121");
+  @DataProvider(name = "stringMultiplyData")
+  public Object[][] dataProviderMethod() {
+    return new Object[][] {
+        {new TestTuple<>(new String[]{"11", "1"}, "11")},
+        {new TestTuple<>(new String[]{"10", "70"}, "700")},
+        {new TestTuple<>(new String[]{"10", "55"}, "0")},
+        {new TestTuple<>(new String[]{"6913259244", "71103343"}, "491555843274052692")}
+    };
   }
 
-  @Test
-  public void test2() {
-    String s = MultiplyStrings.multiply("10", "70");
-    assertEquals(s, "700");
-  }
-
-  @Test
-  public void test3() {
-    String s = MultiplyStrings.multiply("0", "55");
-    assertEquals(s, "0");
-  }
-
-  @Test
-  public void test4() {
-    String s = MultiplyStrings.multiply("6913259244", "71103343");
-    assertEquals(s, "491555843274052692");
+  @Test(dataProvider = "stringMultiplyData")
+  public void testStringMultiply(TestTuple<String[], String> t) {
+    String s = MultiplyStrings.multiply(t.test[0], t.test[1]);
+    assertEquals(s, t.model);
   }
 
 }

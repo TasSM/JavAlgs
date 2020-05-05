@@ -4,6 +4,7 @@ import static org.testng.Assert.*;
 
 import main.ListNode;
 import main.AddTwoNumbers;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 public class AddTwoNumbersTest {
@@ -23,33 +24,24 @@ public class AddTwoNumbersTest {
     return list;
   }
 
-  @Test
-  public void test1() throws Exception {
-    ListNode output = AddTwoNumbers.addTwoNumbers(createList(new int[]{1,2}), createList(new int[]{1,2}));
-    assertEquals(output.val, 2);
-    assertEquals(output.next.val, 4);
+  @DataProvider(name = "addTestData")
+  public Object[][] dataProviderMethod() throws Exception{
+    return new Object[][]{
+        {new TestTuple<>(new ListNode[]{createList(new int[]{1,2}), createList(new int[]{1,2})}, new int[]{2,4})},
+        {new TestTuple<>(new ListNode[]{createList(new int[]{2,4,3}), createList(new int[]{5,6,4})}, new int[]{7,0,8})},
+        {new TestTuple<>(new ListNode[]{createList(new int[]{3,6,2}), createList(new int[]{0,5,2})}, new int[]{3,1,5})},
+        {new TestTuple<>(new ListNode[]{createList(new int[]{5}), createList(new int[]{5})}, new int[]{0,1})}
+    };
   }
 
-  @Test
-  public void test2() throws Exception {
-    ListNode output = AddTwoNumbers.addTwoNumbers(createList(new int[]{2,4,3}), createList(new int[]{5,6,4}));
-    assertEquals(output.val, 7);
-    assertEquals(output.next.val, 0);
-    assertEquals(output.next.next.val, 8);
-  }
-
-  @Test
-  public void test3() throws Exception {
-    ListNode output = AddTwoNumbers.addTwoNumbers(createList(new int[]{3,6,2}), createList(new int[]{0,5,2}));
-    assertEquals(output.val, 3);
-    assertEquals(output.next.val, 1);
-    assertEquals(output.next.next.val, 5);
-  }
-
-  @Test
-  public void test4() throws Exception {
-    ListNode output = AddTwoNumbers.addTwoNumbers(createList(new int[]{5}), createList(new int[]{5}));
-    assertEquals(output.val, 0);
-    assertEquals(output.next.val, 1);
+  @Test(dataProvider = "addTestData")
+  public void testAddNumbers(TestTuple<ListNode[], int[]> t) {
+    ListNode output = AddTwoNumbers.addTwoNumbers(t.test[0], t.test[1]);
+    for (int i = 0; i < t.model.length-1; i++) {
+        assertEquals(output.val, t.model[i]);
+        if (output.next != null) {
+          output = output.next;
+        }
+    }
   }
 }
