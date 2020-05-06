@@ -13,7 +13,7 @@ public class MultiplyStringsTest {
     return new Object[][] {
         {new TestTuple<>(new String[]{"11", "1"}, "11")},
         {new TestTuple<>(new String[]{"10", "70"}, "700")},
-        {new TestTuple<>(new String[]{"10", "55"}, "0")},
+        {new TestTuple<>(new String[]{"0", "55"}, "0")},
         {new TestTuple<>(new String[]{"6913259244", "71103343"}, "491555843274052692")}
     };
   }

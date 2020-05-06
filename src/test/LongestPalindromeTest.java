@@ -24,7 +24,7 @@ public class LongestPalindromeTest {
   }
 
   @Test(dataProvider = "palindromeTestData")
-  public void test1(TestTuple<String, String> t) {
+  public void testPalindrome(TestTuple<String, String> t) {
     String out = LongestPalindrome.longestPalindrome(t.test);
     assertEquals(out, t.model);
   }

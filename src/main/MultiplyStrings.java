@@ -3,29 +3,23 @@ package main;
 public class MultiplyStrings {
 
   public static String multiply(String num1, String num2) {
-    String out = "";
-    int track = 1;
-    int carry = 0;
-    int x,y,mult;
-    for (int i = num1.length()-1; i > 0; i--) {
-      for (int j = num2.length()-1; j > 0; j--) {
-        x = indexInt(num1, i);
-        y = indexInt(num2, j);
-        mult = (x*y)+carry;
-        out = (char)mult%10 + out;
-        if (mult > 9) {
-          carry = mult/10;
-        }
-        track++;
+    int m = num1.length();
+    int n = num2.length();
+    int[] out = new int[m + n];
+
+    for (int i = num1.length() - 1; i >= 0; i--) {
+      for (int j = num2.length() - 1; j >= 0; j--) {
+        int mul = (num1.charAt(i)-'0') * (num2.charAt(j)-'0');
+        int sum = mul + out[i+j+1];
+        out[i+j] += sum / 10;
+        out[i+j+1] = (sum) % 10;
       }
     }
-    return out;
-  }
 
-  private static int indexInt(String in, int index) {
-    if (index > -1) {
-      return Character.getNumericValue(in.charAt(index));
-    }
-    return 1;
+    StringBuilder sb = new StringBuilder();
+    for (int k : out)
+      if (!(sb.length() == 0 && k == 0))
+        sb.append(k);
+    return sb.length() == 0 ? "0" : sb.toString();
   }
 }
